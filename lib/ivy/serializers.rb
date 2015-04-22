@@ -1,0 +1,1 @@
+require 'ivy/serializers/version'
