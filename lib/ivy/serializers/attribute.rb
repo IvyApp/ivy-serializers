@@ -6,7 +6,13 @@ module Ivy
       end
 
       def generate(generator, resource)
-        generator.attribute(@name, resource.public_send(@name))
+        generator.attribute(@name, get(resource))
+      end
+
+      private
+
+      def get(resource)
+        resource.public_send(@name)
       end
     end
   end
