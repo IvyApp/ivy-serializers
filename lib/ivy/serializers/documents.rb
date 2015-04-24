@@ -1,4 +1,3 @@
-require 'ivy/serializers/documents/document'
 require 'ivy/serializers/documents/individual_resource'
 require 'ivy/serializers/documents/resource_collection'
 
