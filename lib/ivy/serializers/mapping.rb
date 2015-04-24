@@ -12,8 +12,8 @@ module Ivy
         attribute(:id)
       end
 
-      def attribute(name)
-        @attrs[name] = Attribute.new(name)
+      def attribute(name, options={})
+        @attrs[name] = Attribute.new(name, options)
       end
 
       def attributes(*names)

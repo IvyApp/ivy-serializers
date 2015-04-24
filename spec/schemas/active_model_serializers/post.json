@@ -1,8 +1,0 @@
-{
-  "type": "object",
-  "required": ["post"],
-  "properties": {
-    "post": { "$ref": "definitions.json#/post" },
-    "users": { "$ref": "definitions.json#/users" }
-  }
-}

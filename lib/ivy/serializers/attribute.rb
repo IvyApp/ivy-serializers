@@ -1,12 +1,13 @@
 module Ivy
   module Serializers
     class Attribute
-      def initialize(name)
+      def initialize(name, options={})
         @name = name
+        @key  = options.fetch(:as, @name)
       end
 
       def generate(generator, resource)
-        generator.attribute(@name, get(resource))
+        generator.attribute(@key, get(resource))
       end
 
       private
