@@ -30,10 +30,10 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         it { should eq(:post => {:id => '1', :links => {}, :title => 'title', :type => 'post'}) }
       end
 
-      context 'with the :as option' do
+      context 'with a block provided' do
         before do
           registry.map post_class do
-            attribute :title, :as => :headline
+            attribute(:headline) { |post| post.title }
           end
         end
 
@@ -55,6 +55,16 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         end
 
         it { should eq(:post => {:id => '1', :links => {:author => '1'}, :type => 'post'}) }
+      end
+
+      context 'with a block provided' do
+        before do
+          registry.map post_class do
+            belongs_to(:user) { |post| post.author }
+          end
+        end
+
+        it { should eq(:post => {:id => '1', :links => {:user => '1'}, :type => 'post'}) }
       end
 
       context 'with the :embed_in_root option' do
@@ -95,6 +105,16 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         end
 
         it { should eq(:post => {:id => '1', :links => {:comments => ['1']}, :type => 'post'}) }
+      end
+
+      context 'with a block provided' do
+        before do
+          registry.map post_class do
+            has_many(:replies) { |post| post.comments }
+          end
+        end
+
+        it { should eq(:post => {:id => '1', :links => {:replies => ['1']}, :type => 'post'}) }
       end
 
       context 'with the :embed_in_root option' do

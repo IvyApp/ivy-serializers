@@ -12,20 +12,20 @@ module Ivy
         attribute(:id)
       end
 
-      def attribute(name, options={})
-        @attrs[name] = Attribute.new(name, options)
+      def attribute(name, &block)
+        @attrs[name] = Attribute.new(name, &block)
       end
 
       def attributes(*names)
         names.each { |name| attribute(name) }
       end
 
-      def belongs_to(name, options={})
-        @links[name] = Relationships::BelongsTo.new(name, options)
+      def belongs_to(name, options={}, &block)
+        @links[name] = Relationships::BelongsTo.new(name, options, &block)
       end
 
-      def has_many(name, options={})
-        @links[name] = Relationships::HasMany.new(name, options)
+      def has_many(name, options={}, &block)
+        @links[name] = Relationships::HasMany.new(name, options, &block)
       end
 
       def links(generator, resource)

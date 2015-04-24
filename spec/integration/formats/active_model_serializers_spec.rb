@@ -29,10 +29,10 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
         it { should eq(:post => {:id => 1, :title => 'title'}) }
       end
 
-      context 'with the :as option' do
+      context 'with a block provided' do
         before do
           registry.map post_class do
-            attribute :title, :as => :headline
+            attribute(:headline) { |post| post.title }
           end
         end
 
@@ -54,6 +54,16 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
         end
 
         it { should eq(:post => {:author_id => 1, :id => 1}) }
+      end
+
+      context 'with a block provided' do
+        before do
+          registry.map post_class do
+            belongs_to(:user) { |post| post.author }
+          end
+        end
+
+        it { should eq(:post => {:id => 1, :user_id => 1}) }
       end
 
       context 'with the :embed_in_root option' do
@@ -94,6 +104,16 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
         end
 
         it { should eq(:post => {:comment_ids => [1], :id => 1}) }
+      end
+
+      context 'with a block provided' do
+        before do
+          registry.map post_class do
+            has_many(:replies) { |post| post.comments }
+          end
+        end
+
+        it { should eq(:post => {:id => 1, :reply_ids => [1]}) }
       end
 
       context 'with the :embed_in_root option' do
