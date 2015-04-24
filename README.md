@@ -1,5 +1,7 @@
 # Ivy::Serializers
 
+[![Build Status](https://travis-ci.org/IvyApp/ivy-serializers.svg?branch=master)](https://travis-ci.org/IvyApp/ivy-serializers)
+
 JSON serialization for client-side apps. Can output either
 [ActiveModel::Serializers](https://github.com/rails-api/active_model_serializers)
 or [JSON-API](http://jsonapi.org/) formats.
