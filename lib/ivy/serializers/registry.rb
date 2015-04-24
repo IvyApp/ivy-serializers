@@ -15,15 +15,15 @@ module Ivy
         mapping_for(klass).instance_eval(&block)
       end
 
-      def mapping_for(klass)
-        @mappings[klass]
-      end
-
       def resource(generator, resource)
         mapping_for(resource.class).resource(generator, resource)
       end
 
       private
+
+      def mapping_for(klass)
+        @mappings[klass]
+      end
 
       def new_mapping(klass)
         Mapping.new(klass)
