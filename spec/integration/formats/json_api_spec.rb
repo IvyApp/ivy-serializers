@@ -13,7 +13,13 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
       let(:post_class) { double('Post', :name => 'Post') }
       let(:post) { double('post', :class => post_class, :id => 1) }
 
-      it { should eq(:post => {:id => '1', :links => {}, :type => 'post'}) }
+      it { should eq({
+        :data => {
+          :type => 'post',
+          :id => '1',
+          :links => {}
+        }
+      }) }
     end
 
     context 'with an attribute' do
@@ -27,7 +33,14 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :links => {}, :title => 'title', :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :title => 'title',
+            :links => {}
+          }
+        }) }
       end
 
       context 'with a block provided' do
@@ -37,7 +50,14 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :headline => 'title', :links => {}, :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :headline => 'title',
+            :links => {}
+          }
+        }) }
       end
     end
 
@@ -54,7 +74,17 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :links => {:author => '1'}, :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :author => {
+                :linkage => {:id => '1', :type => 'author'}
+              }
+            }
+          }
+        }) }
       end
 
       context 'with a block provided' do
@@ -64,7 +94,17 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :links => {:user => '1'}, :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :user => {
+                :linkage => {:id => '1', :type => 'author'}
+              }
+            }
+          }
+        }) }
       end
 
       context 'with the :embed_in_root option' do
@@ -74,10 +114,25 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(
-          :linked => {:authors => [{:id => '1', :links => {}, :type => 'author'}]},
-          :post => {:id => '1', :links => {:author => '1'}, :type => 'post'}
-        ) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :author => {
+                :linkage => {:id => '1', :type => 'author'}
+              }
+            }
+          },
+
+          :included => {
+            :authors => [{
+              :id => '1',
+              :links => {},
+              :type => 'author'
+            }]
+          }
+        }) }
       end
 
       context 'with the :polymorphic option' do
@@ -87,7 +142,17 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :links => {:author => '1'}, :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :author => {
+                :linkage => {:id => '1', :type => 'author'}
+              }
+            }
+          }
+        }) }
       end
     end
 
@@ -104,7 +169,17 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :links => {:comments => ['1']}, :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :comments => {
+                :linkage => [{:id => '1', :type => 'comment'}]
+              }
+            }
+          }
+        }) }
       end
 
       context 'with a block provided' do
@@ -114,7 +189,17 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :links => {:replies => ['1']}, :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :replies => {
+                :linkage => [{:id => '1', :type => 'comment'}]
+              }
+            }
+          }
+        }) }
       end
 
       context 'with the :embed_in_root option' do
@@ -124,10 +209,25 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(
-          :post => {:id => '1', :links => {:comments => ['1']}, :type => 'post'},
-          :linked => {:comments => [{:id => '1', :links => {}, :type => 'comment'}]}
-        ) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :comments => {
+                :linkage => [{:id => '1', :type => 'comment'}]
+              }
+            }
+          },
+
+          :included => {
+            :comments => [{
+              :type => 'comment',
+              :id => '1',
+              :links => {}
+            }]
+          }
+        }) }
       end
 
       context 'with the :polymorphic option' do
@@ -137,7 +237,17 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq(:post => {:id => '1', :links => {:comments => ['1']}, :type => 'post'}) }
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {
+              :comments => {
+                :linkage => [{:id => '1', :type => 'comment'}]
+              }
+            }
+          }
+        }) }
       end
     end
   end

@@ -9,12 +9,24 @@ module Ivy
           super
         end
 
+        def belongs_to(name, resource, options={})
+          @hash_gen.store_object(name) { linkage(resource) }
+        end
+
+        def has_many(name, resources, options={})
+          @hash_gen.store_object(name) { linkages(resources) }
+        end
+
         def linked(document)
-          @hash_gen.store_object(:linked) { super }
+          @hash_gen.store_object(:included) { super }
         end
 
         def links(document)
           @hash_gen.store_object(:links) { super }
+        end
+
+        def primary_resource(primary_resource_name, primary_resource)
+          @hash_gen.store_object(:data) { resource(primary_resource) }
         end
 
         def resource(resource)
@@ -30,6 +42,23 @@ module Ivy
 
         def extract_id(resource)
           coerce_id(super)
+        end
+
+        def linkage(resource)
+          @hash_gen.store_object(:linkage) { linkage_object(resource) }
+        end
+
+        def linkage_object(resource)
+          id(:id, resource)
+          type(:type, resource)
+        end
+
+        def linkages(resources)
+          @hash_gen.store_array(:linkage) { linkage_objects(resources) }
+        end
+
+        def linkage_objects(resources)
+          resources.each { |resource| @hash_gen.push_object { linkage_object(resource) } }
         end
       end
     end
