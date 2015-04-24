@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": ["post", "linked"],
+  "properties": {
+    "post": { "$ref": "definitions.json#/post" },
+    "linked": {
+      "type": "object",
+      "properties": {
+        "messages": { "$ref": "definitions.json#/messages" },
+        "users": { "$ref": "definitions.json#/users" },
+        "videos": { "$ref": "definitions.json#/videos" }
+      }
+    }
+  }
+}

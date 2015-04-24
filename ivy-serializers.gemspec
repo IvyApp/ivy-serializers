@@ -15,6 +15,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1.6'
+  spec.add_development_dependency 'json-schema', '~> 2.5.1'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 3.2.0'
+
+  spec.add_dependency 'activesupport', '>= 2.2.1'
+  spec.add_dependency 'hash_generator', '~> 1.1'
 end
