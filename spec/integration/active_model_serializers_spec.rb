@@ -68,6 +68,16 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           :post => {:author_id => 1, :id => 1}
         ) }
       end
+
+      context 'with the :polymorphic option' do
+        before do
+          registry.map post_class do
+            belongs_to :author, :polymorphic => true
+          end
+        end
+
+        it { should eq(:post => {:author => {:id => 1, :type => 'author'}, :id => 1}) }
+      end
     end
 
     context 'with a has_many relationship' do

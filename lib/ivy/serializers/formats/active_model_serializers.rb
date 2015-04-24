@@ -5,7 +5,15 @@ module Ivy
     module Formats
       class ActiveModelSerializers < JSON
         def belongs_to(name, resource, options={})
-          id(:"#{name}_id", resource)
+          if options[:polymorphic]
+            if resource
+              @hash_gen.store_object(name) { polymorphic_resource(resource) }
+            else
+              @hash_gen.store(name, nil)
+            end
+          else
+            id(:"#{name}_id", resource)
+          end
         end
 
         def has_many(name, resources, options={})

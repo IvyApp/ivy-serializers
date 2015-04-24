@@ -69,6 +69,16 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           :post => {:id => '1', :links => {:author => '1'}, :type => 'post'}
         ) }
       end
+
+      context 'with the :polymorphic option' do
+        before do
+          registry.map post_class do
+            belongs_to :author, :polymorphic => true
+          end
+        end
+
+        it { should eq(:post => {:id => '1', :links => {:author => '1'}, :type => 'post'}) }
+      end
     end
 
     context 'with a has_many relationship' do
