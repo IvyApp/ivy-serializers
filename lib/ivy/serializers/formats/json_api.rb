@@ -26,7 +26,11 @@ module Ivy
         end
 
         def primary_resource(primary_resource_name, primary_resource)
-          @hash_gen.store_object(:data) { resource(primary_resource) }
+          super(:data, primary_resource)
+        end
+
+        def primary_resources(primary_resources_name, primary_resources)
+          super(:data, primary_resources)
         end
 
         def resource(resource)

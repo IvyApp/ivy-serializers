@@ -5,7 +5,7 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
   describe '#as_json' do
     let(:registry) { Ivy::Serializers::Registry.new }
-    let(:document) { Ivy::Serializers::Documents.create(registry, :post, post) }
+    let(:document) { Ivy::Serializers::Documents.create(registry, :posts, resource) }
 
     subject { format.as_json }
 
@@ -13,13 +13,29 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
       let(:post_class) { double('Post', :name => 'Post') }
       let(:post) { double('post', :class => post_class, :id => 1) }
 
-      it { should eq({
-        :data => {
-          :type => 'post',
-          :id => '1',
-          :links => {}
-        }
-      }) }
+      context 'for an individual resource' do
+        let(:resource) { post }
+
+        it { should eq({
+          :data => {
+            :type => 'post',
+            :id => '1',
+            :links => {}
+          }
+        }) }
+      end
+
+      context 'for a resource collection' do
+        let(:resource) { [post] }
+
+        it { should eq({
+          :data => [{
+            :type => 'post',
+            :id => '1',
+            :links => {}
+          }]
+        }) }
+      end
     end
 
     context 'with an attribute' do
@@ -33,14 +49,31 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :title => 'title',
-            :links => {}
-          }
-        }) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :title => 'title',
+              :links => {}
+            }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :title => 'title',
+              :links => {}
+            }]
+          }) }
+        end
       end
 
       context 'with a block provided' do
@@ -50,14 +83,31 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :headline => 'title',
-            :links => {}
-          }
-        }) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :headline => 'title',
+              :links => {}
+            }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :headline => 'title',
+              :links => {}
+            }]
+          }) }
+        end
       end
     end
 
@@ -74,17 +124,37 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :author => {
-                :linkage => {:id => '1', :type => 'author'}
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :author => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
               }
             }
-          }
-        }) }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :author => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
+              }
+            }]
+          }) }
+        end
       end
 
       context 'with a block provided' do
@@ -94,17 +164,37 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :user => {
-                :linkage => {:id => '1', :type => 'author'}
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :user => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
               }
             }
-          }
-        }) }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :user => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
+              }
+            }]
+          }) }
+        end
       end
 
       context 'with the :embed_in_root option' do
@@ -114,25 +204,53 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :author => {
-                :linkage => {:id => '1', :type => 'author'}
-              }
-            }
-          },
+        context 'for an individual resource' do
+          let(:resource) { post }
 
-          :included => {
-            :authors => [{
+          it { should eq({
+            :data => {
+              :type => 'post',
               :id => '1',
-              :links => {},
-              :type => 'author'
-            }]
-          }
-        }) }
+              :links => {
+                :author => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
+              }
+            },
+
+            :included => {
+              :authors => [{
+                :id => '1',
+                :links => {},
+                :type => 'author'
+              }]
+            }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :author => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
+              }
+            }],
+
+            :included => {
+              :authors => [{
+                :id => '1',
+                :links => {},
+                :type => 'author'
+              }]
+            }
+          }) }
+        end
       end
 
       context 'with the :polymorphic option' do
@@ -142,17 +260,37 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :author => {
-                :linkage => {:id => '1', :type => 'author'}
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :author => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
               }
             }
-          }
-        }) }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :author => {
+                  :linkage => {:id => '1', :type => 'author'}
+                }
+              }
+            }]
+          }) }
+        end
       end
     end
 
@@ -169,17 +307,37 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :comments => {
-                :linkage => [{:id => '1', :type => 'comment'}]
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :comments => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
               }
             }
-          }
-        }) }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :comments => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
+              }
+            }]
+          }) }
+        end
       end
 
       context 'with a block provided' do
@@ -189,17 +347,37 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :replies => {
-                :linkage => [{:id => '1', :type => 'comment'}]
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :replies => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
               }
             }
-          }
-        }) }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :replies => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
+              }
+            }]
+          }) }
+        end
       end
 
       context 'with the :embed_in_root option' do
@@ -209,25 +387,53 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :comments => {
-                :linkage => [{:id => '1', :type => 'comment'}]
-              }
-            }
-          },
+        context 'for an individual resource' do
+          let(:resource) { post }
 
-          :included => {
-            :comments => [{
-              :type => 'comment',
+          it { should eq({
+            :data => {
+              :type => 'post',
               :id => '1',
-              :links => {}
-            }]
-          }
-        }) }
+              :links => {
+                :comments => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
+              }
+            },
+
+            :included => {
+              :comments => [{
+                :type => 'comment',
+                :id => '1',
+                :links => {}
+              }]
+            }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :comments => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
+              }
+            }],
+
+            :included => {
+              :comments => [{
+                :type => 'comment',
+                :id => '1',
+                :links => {}
+              }]
+            }
+          }) }
+        end
       end
 
       context 'with the :polymorphic option' do
@@ -237,17 +443,37 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           end
         end
 
-        it { should eq({
-          :data => {
-            :type => 'post',
-            :id => '1',
-            :links => {
-              :comments => {
-                :linkage => [{:id => '1', :type => 'comment'}]
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq({
+            :data => {
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :comments => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
               }
             }
-          }
-        }) }
+          }) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq({
+            :data => [{
+              :type => 'post',
+              :id => '1',
+              :links => {
+                :comments => {
+                  :linkage => [{:id => '1', :type => 'comment'}]
+                }
+              }
+            }]
+          }) }
+        end
       end
     end
   end

@@ -5,14 +5,24 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
 
   describe '#as_json' do
     let(:registry) { Ivy::Serializers::Registry.new }
-    let(:document) { Ivy::Serializers::Documents.create(registry, :post, post) }
+    let(:document) { Ivy::Serializers::Documents.create(registry, :posts, resource) }
 
     subject { format.as_json }
 
     context 'with default mapping' do
       let(:post) { double('post', :id => 1) }
 
-      it { should eq(:post => {:id => 1}) }
+      context 'for an individual resource' do
+        let(:resource) { post }
+
+        it { should eq(:post => {:id => 1}) }
+      end
+
+      context 'for a resource collection' do
+        let(:resource) { [post] }
+
+        it { should eq(:posts => [{:id => 1}]) }
+      end
     end
 
     context 'with an attribute' do
@@ -26,7 +36,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:id => 1, :title => 'title'}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:id => 1, :title => 'title'}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:id => 1, :title => 'title'}]) }
+        end
       end
 
       context 'with a block provided' do
@@ -36,7 +56,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:id => 1, :headline => 'title'}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:id => 1, :headline => 'title'}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:id => 1, :headline => 'title'}]) }
+        end
       end
     end
 
@@ -53,7 +83,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:author_id => 1, :id => 1}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:author_id => 1, :id => 1}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:author_id => 1, :id => 1}]) }
+        end
       end
 
       context 'with a block provided' do
@@ -63,7 +103,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:id => 1, :user_id => 1}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:id => 1, :user_id => 1}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:id => 1, :user_id => 1}]) }
+        end
       end
 
       context 'with the :embed_in_root option' do
@@ -73,10 +123,23 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(
-          :authors => [{:id => 1}],
-          :post => {:author_id => 1, :id => 1}
-        ) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(
+            :authors => [{:id => 1}],
+            :post => {:author_id => 1, :id => 1}
+          ) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(
+            :authors => [{:id => 1}],
+            :posts => [{:author_id => 1, :id => 1}]
+          ) }
+        end
       end
 
       context 'with the :polymorphic option' do
@@ -86,7 +149,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:author => {:id => 1, :type => 'author'}, :id => 1}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:author => {:id => 1, :type => 'author'}, :id => 1}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:author => {:id => 1, :type => 'author'}, :id => 1}]) }
+        end
       end
     end
 
@@ -103,7 +176,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:comment_ids => [1], :id => 1}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:comment_ids => [1], :id => 1}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:comment_ids => [1], :id => 1}]) }
+        end
       end
 
       context 'with a block provided' do
@@ -113,7 +196,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:id => 1, :reply_ids => [1]}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:id => 1, :reply_ids => [1]}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:id => 1, :reply_ids => [1]}]) }
+        end
       end
 
       context 'with the :embed_in_root option' do
@@ -123,10 +216,23 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(
-          :comments => [{:id => 1}],
-          :post => {:comment_ids => [1], :id => 1}
-        ) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(
+            :comments => [{:id => 1}],
+            :post => {:comment_ids => [1], :id => 1}
+          ) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(
+            :comments => [{:id => 1}],
+            :posts => [{:comment_ids => [1], :id => 1}]
+          ) }
+        end
       end
 
       context 'with the :polymorphic option' do
@@ -136,7 +242,17 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           end
         end
 
-        it { should eq(:post => {:comments => [{:id => 1, :type => 'comment'}], :id => 1}) }
+        context 'for an individual resource' do
+          let(:resource) { post }
+
+          it { should eq(:post => {:comments => [{:id => 1, :type => 'comment'}], :id => 1}) }
+        end
+
+        context 'for a resource collection' do
+          let(:resource) { [post] }
+
+          it { should eq(:posts => [{:comments => [{:id => 1, :type => 'comment'}], :id => 1}]) }
+        end
       end
     end
   end

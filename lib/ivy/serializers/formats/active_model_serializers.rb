@@ -1,3 +1,4 @@
+require 'active_support/inflector'
 require 'ivy/serializers/formats/json'
 
 module Ivy
@@ -20,8 +21,16 @@ module Ivy
           if options[:polymorphic]
             @hash_gen.store_array(name) { polymorphic_resources(resources) }
           else
-            ids(:"#{ActiveSupport::Inflector.singularize(name.to_s)}_ids", resources)
+            ids(:"#{singularize(name)}_ids", resources)
           end
+        end
+
+        def primary_resource(primary_resource_name, primary_resource)
+          super(singularize(primary_resource_name).to_sym, primary_resource)
+        end
+
+        def primary_resources(primary_resources_name, primary_resources)
+          super(primary_resources_name, primary_resources)
         end
 
         private
@@ -33,6 +42,10 @@ module Ivy
 
         def polymorphic_resources(resources)
           resources.each { |resource| @hash_gen.push_object { polymorphic_resource(resource) } }
+        end
+
+        def singularize(name)
+          ActiveSupport::Inflector.singularize(name.to_s)
         end
       end
     end
