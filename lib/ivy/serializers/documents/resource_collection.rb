@@ -4,7 +4,7 @@ module Ivy
   module Serializers
     module Documents
       class ResourceCollection < Document
-        def generate_linked(generator)
+        def generate_included(generator)
           @primary_resource.each { |resource| @serializer.relationships(self, resource) }
           super
         end

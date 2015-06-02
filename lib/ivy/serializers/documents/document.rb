@@ -8,11 +8,11 @@ module Ivy
           @serializer = serializer
           @primary_resource_name = primary_resource_name
           @primary_resource = primary_resource
-          @linked_resources = Hash.new { |hash, klass| hash[klass] = Set.new }
+          @included_resources = Hash.new { |hash, klass| hash[klass] = Set.new }
         end
 
         def belongs_to(name, resource, options={})
-          link(resource) if options[:embed_in_root]
+          include_resource(resource) if options[:embed_in_root]
         end
 
         def generate(generator)
@@ -23,12 +23,12 @@ module Ivy
           @serializer.attributes(generator, resource)
         end
 
-        def generate_linked(generator)
-          generator.linked(self) unless @linked_resources.empty?
+        def generate_included(generator)
+          generator.included(self) unless @included_resources.empty?
         end
 
-        def generate_linked_resources(generator)
-          @linked_resources.each_pair { |klass, resources| generator.linked_resources(klass, resources) }
+        def generate_included_resources(generator)
+          @included_resources.each_pair { |klass, resources| generator.included_resources(klass, resources) }
         end
 
         def generate_relationships(generator, resource)
@@ -40,17 +40,17 @@ module Ivy
         end
 
         def has_many(name, resources, options={})
-          link_many(resources) if options[:embed_in_root]
+          include_resources(resources) if options[:embed_in_root]
         end
 
         private
 
-        def link(resource)
-          @serializer.relationships(self, resource) if @linked_resources[resource.class].add?(resource)
+        def include_resource(resource)
+          @serializer.relationships(self, resource) if @included_resources[resource.class].add?(resource)
         end
 
-        def link_many(resources)
-          resources.each { |resource| link(resource) }
+        def include_resources(resources)
+          resources.each { |resource| include_resource(resource) }
         end
       end
     end

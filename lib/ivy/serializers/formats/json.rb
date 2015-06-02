@@ -29,7 +29,7 @@ module Ivy
 
         def document(document)
           document.generate_primary_resource(self)
-          document.generate_linked(self)
+          document.generate_included(self)
         end
 
         def has_many(name, resources, options={})
@@ -44,11 +44,11 @@ module Ivy
           attribute(key, resources.map { |resource| extract_id(resource) })
         end
 
-        def linked(document)
-          document.generate_linked_resources(self)
+        def included(document)
+          document.generate_included_resources(self)
         end
 
-        def linked_resources(resource_class, resources)
+        def included_resources(resource_class, resources)
           key = key_for_collection(resource_class).to_sym
           @hash_gen.store_array(key) { resources(resources) }
         end

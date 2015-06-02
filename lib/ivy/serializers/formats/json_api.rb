@@ -21,7 +21,7 @@ module Ivy
           @hash_gen.store_object(name) { linkages(resources) }
         end
 
-        def linked(document)
+        def included(document)
           @hash_gen.store_object(:included) { super }
         end
 
