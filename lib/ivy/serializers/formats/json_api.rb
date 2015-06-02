@@ -4,11 +4,6 @@ module Ivy
   module Serializers
     module Formats
       class JSONAPI < JSON
-        def attribute(key, value)
-          value = coerce_id(value) if key == :id
-          super
-        end
-
         def attributes(resource)
           @hash_gen.store_object(:attributes) { super }
         end
