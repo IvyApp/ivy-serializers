@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/IvyApp/ivy-serializers.svg?branch=master)](https://travis-ci.org/IvyApp/ivy-serializers)
 
-JSON serialization for client-side apps, with multiple output formats. Ships with [ActiveModel::Serializers](https://github.com/rails-api/active_model_serializers) and [JSON-API](http://jsonapi.org/) RC3 support out of the box.
+JSON serialization for client-side apps, with multiple output formats. Ships with [ActiveModel::Serializers](https://github.com/rails-api/active_model_serializers) and [JSON-API](http://jsonapi.org/) 1.0 support out of the box.
 
 If you're building a Rails project, take a look at [ivy-serializers-rails](https://github.com/IvyApp/ivy-serializers-rails) instead.
 
@@ -47,16 +47,18 @@ Define a serializer in `app/serializers/my_serializer.rb`:
 ```ruby
 class MySerializer < Ivy::Serializers::Serializer
   map Post do
-    attributes :id, :title
+    attributes :title
     has_many :comments
   end
 
   map Comment do
-    attributes :id, :body
+    attributes :body
     belongs_to :post
   end
 end
 ```
+
+**NOTE**: An `id` attribute is automatically defined for you. This is a consequence of supporting JSON-API, which requires all resources to have IDs.
 
 ### Sideloading
 
@@ -96,11 +98,11 @@ By default, attributes are mapped directly to methods on the record being serial
 
 ```ruby
 map Post do
-  attributes :id, :title
+  attributes :title
 end
 ```
 
-will read `id` and `title` from the post and write it into the hash under the `:id` and `:title` keys. If you want to customize the value, you can use the `#attribute` method instead, and pass it a block:
+will read `title` from the post and write it into the hash under the `:title` key. If you want to customize the value, you can use the `#attribute` method instead, and pass it a block:
 
 ```ruby
 map Post do
