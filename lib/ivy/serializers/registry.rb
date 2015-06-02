@@ -7,6 +7,10 @@ module Ivy
         @mappings = Hash.new { |hash, klass| hash[klass] = new_mapping(klass) }
       end
 
+      def attributes(generator, resource)
+        mapping_for(resource.class).generate_attributes(generator, resource)
+      end
+
       def links(generator, resource)
         mapping_for(resource.class).links(generator, resource)
       end

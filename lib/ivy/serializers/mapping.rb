@@ -8,8 +8,6 @@ module Ivy
         @attrs = {}
         @links = {}
         @klass = klass
-
-        attribute(:id)
       end
 
       def attribute(name, &block)
@@ -24,6 +22,10 @@ module Ivy
         @links[name] = Relationships::BelongsTo.new(name, options, &block)
       end
 
+      def generate_attributes(generator, resource)
+        @attrs.each_value { |attr| attr.generate(generator, resource) }
+      end
+
       def has_many(name, options={}, &block)
         @links[name] = Relationships::HasMany.new(name, options, &block)
       end
@@ -33,7 +35,8 @@ module Ivy
       end
 
       def resource(generator, resource)
-        @attrs.each_value { |attr| attr.generate(generator, resource) }
+        generator.attributes(resource) unless @attrs.empty?
+        generator.links(resource) unless @links.empty?
       end
     end
   end

@@ -19,8 +19,7 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         it { should eq({
           :data => {
             :type => 'post',
-            :id => '1',
-            :links => {}
+            :id => '1'
           }
         }) }
       end
@@ -31,8 +30,7 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         it { should eq({
           :data => [{
             :type => 'post',
-            :id => '1',
-            :links => {}
+            :id => '1'
           }]
         }) }
       end
@@ -56,8 +54,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :title => 'title',
-              :links => {}
+              :attributes => {
+                :title => 'title'
+              }
             }
           }) }
         end
@@ -69,8 +68,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :title => 'title',
-              :links => {}
+              :attributes => {
+                :title => 'title'
+              }
             }]
           }) }
         end
@@ -90,8 +90,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :headline => 'title',
-              :links => {}
+              :attributes => {
+                :headline => 'title'
+              }
             }
           }) }
         end
@@ -103,8 +104,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :headline => 'title',
-              :links => {}
+              :attributes => {
+                :headline => 'title'
+              }
             }]
           }) }
         end
@@ -131,9 +133,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :author => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             }
@@ -147,9 +149,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :author => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             }]
@@ -171,9 +173,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :user => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             }
@@ -187,9 +189,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :user => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             }]
@@ -211,9 +213,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :author => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             },
@@ -221,7 +223,6 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :included => {
               :authors => [{
                 :id => '1',
-                :links => {},
                 :type => 'author'
               }]
             }
@@ -235,9 +236,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :author => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             }],
@@ -245,7 +246,6 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :included => {
               :authors => [{
                 :id => '1',
-                :links => {},
                 :type => 'author'
               }]
             }
@@ -267,9 +267,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :author => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             }
@@ -283,9 +283,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :author => {
-                  :linkage => {:id => '1', :type => 'author'}
+                  :data => {:id => '1', :type => 'author'}
                 }
               }
             }]
@@ -314,9 +314,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :comments => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             }
@@ -330,9 +330,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :comments => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             }]
@@ -354,9 +354,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :replies => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             }
@@ -370,9 +370,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :replies => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             }]
@@ -394,9 +394,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :comments => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             },
@@ -404,8 +404,7 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :included => {
               :comments => [{
                 :type => 'comment',
-                :id => '1',
-                :links => {}
+                :id => '1'
               }]
             }
           }) }
@@ -418,9 +417,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :comments => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             }],
@@ -428,8 +427,7 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :included => {
               :comments => [{
                 :type => 'comment',
-                :id => '1',
-                :links => {}
+                :id => '1'
               }]
             }
           }) }
@@ -450,9 +448,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => {
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :comments => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             }
@@ -466,9 +464,9 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
             :data => [{
               :type => 'post',
               :id => '1',
-              :links => {
+              :relationships => {
                 :comments => {
-                  :linkage => [{:id => '1', :type => 'comment'}]
+                  :data => [{:id => '1', :type => 'comment'}]
                 }
               }
             }]

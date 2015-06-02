@@ -19,6 +19,10 @@ module Ivy
           generator.document(self)
         end
 
+        def generate_attributes(generator, resource)
+          @serializer.attributes(generator, resource)
+        end
+
         def generate_linked(generator)
           generator.linked(self) unless @linked_resources.empty?
         end
@@ -33,7 +37,6 @@ module Ivy
 
         def generate_resource(generator, resource)
           @serializer.resource(generator, resource)
-          generator.links(resource)
         end
 
         def has_many(name, resources, options={})

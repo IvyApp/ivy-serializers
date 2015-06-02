@@ -6,6 +6,10 @@ module Ivy
       class << self
         attr_accessor :_registry
 
+        def attributes(generator, resource)
+          _registry.attributes(generator, resource)
+        end
+
         def inherited(base)
           base._registry = Registry.new
         end
@@ -21,6 +25,10 @@ module Ivy
         def resource(generator, resource)
           _registry.resource(generator, resource)
         end
+      end
+
+      def attributes(generator, resource)
+        self.class.attributes(generator, resource)
       end
 
       def links(generator, links)

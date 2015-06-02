@@ -9,6 +9,10 @@ module Ivy
           super
         end
 
+        def attributes(resource)
+          @hash_gen.store_object(:attributes) { super }
+        end
+
         def belongs_to(name, resource, options={})
           @hash_gen.store_object(name) { linkage(resource) }
         end
@@ -22,7 +26,7 @@ module Ivy
         end
 
         def links(document)
-          @hash_gen.store_object(:links) { super }
+          @hash_gen.store_object(:relationships) { super }
         end
 
         def primary_resource(primary_resource_name, primary_resource)
@@ -49,7 +53,7 @@ module Ivy
         end
 
         def linkage(resource)
-          @hash_gen.store_object(:linkage) { linkage_object(resource) }
+          @hash_gen.store_object(:data) { linkage_object(resource) }
         end
 
         def linkage_object(resource)
@@ -58,7 +62,7 @@ module Ivy
         end
 
         def linkages(resources)
-          @hash_gen.store_array(:linkage) { linkage_objects(resources) }
+          @hash_gen.store_array(:data) { linkage_objects(resources) }
         end
 
         def linkage_objects(resources)

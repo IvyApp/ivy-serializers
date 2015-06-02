@@ -19,6 +19,10 @@ module Ivy
           @hash_gen.store(key, value)
         end
 
+        def attributes(resource)
+          @document.generate_attributes(self, resource)
+        end
+
         def belongs_to(name, resource, options={})
           id(name, resource)
         end
@@ -62,6 +66,7 @@ module Ivy
         end
 
         def resource(resource)
+          id(:id, resource)
           @document.generate_resource(self, resource)
         end
 
@@ -80,7 +85,7 @@ module Ivy
         end
 
         def extract_type(resource)
-          ActiveSupport::Inflector.dasherize(ActiveSupport::Inflector.underscore(resource.class.name))
+          ActiveSupport::Inflector.dasherize(key_for_individual(resource.class))
         end
 
         def key_for_collection(resource_class)
