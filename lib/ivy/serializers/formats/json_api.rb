@@ -9,7 +9,11 @@ module Ivy
         end
 
         def belongs_to(name, resource, options={})
-          @hash_gen.store_object(name) { linkage(resource) }
+          if resource
+            @hash_gen.store_object(name) { linkage(resource) }
+          else
+            @hash_gen.store(name, nil)
+          end
         end
 
         def has_many(name, resources, options={})

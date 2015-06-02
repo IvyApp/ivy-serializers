@@ -140,6 +140,20 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }
             }
           }) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq({
+              :data => {
+                :type => 'post',
+                :id => '1',
+                :relationships => {
+                  :author => nil
+                }
+              }
+            }) }
+          end
         end
 
         context 'for a resource collection' do
@@ -180,6 +194,20 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }
             }
           }) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq({
+              :data => {
+                :type => 'post',
+                :id => '1',
+                :relationships => {
+                  :user => nil
+                }
+              }
+            }) }
+          end
         end
 
         context 'for a resource collection' do
@@ -227,6 +255,20 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }]
             }
           }) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq({
+              :data => {
+                :type => 'post',
+                :id => '1',
+                :relationships => {
+                  :author => nil
+                }
+              }
+            }) }
+          end
         end
 
         context 'for a resource collection' do
@@ -274,6 +316,20 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }
             }
           }) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq({
+              :data => {
+                :type => 'post',
+                :id => '1',
+                :relationships => {
+                  :author => nil
+                }
+              }
+            }) }
+          end
         end
 
         context 'for a resource collection' do

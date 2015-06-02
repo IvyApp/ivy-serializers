@@ -81,7 +81,7 @@ module Ivy
         private
 
         def extract_id(resource)
-          resource.id
+          resource.id if resource
         end
 
         def extract_type(resource)

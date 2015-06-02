@@ -87,6 +87,12 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           let(:resource) { post }
 
           it { should eq(:post => {:author_id => 1, :id => 1}) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:post => {:author_id => nil, :id => 1}) }
+          end
         end
 
         context 'for a resource collection' do
@@ -107,6 +113,12 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           let(:resource) { post }
 
           it { should eq(:post => {:id => 1, :user_id => 1}) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:post => {:id => 1, :user_id => nil}) }
+          end
         end
 
         context 'for a resource collection' do
@@ -130,6 +142,12 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
             :authors => [{:id => 1}],
             :post => {:author_id => 1, :id => 1}
           ) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:post => {:author_id => nil, :id => 1}) }
+          end
         end
 
         context 'for a resource collection' do
@@ -153,6 +171,12 @@ RSpec.describe Ivy::Serializers::Formats::ActiveModelSerializers do
           let(:resource) { post }
 
           it { should eq(:post => {:author => {:id => 1, :type => 'author'}, :id => 1}) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:post => {:author => nil, :id => 1}) }
+          end
         end
 
         context 'for a resource collection' do

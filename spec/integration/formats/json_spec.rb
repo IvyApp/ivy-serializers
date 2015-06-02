@@ -87,6 +87,12 @@ RSpec.describe Ivy::Serializers::Formats::JSON do
           let(:resource) { post }
 
           it { should eq(:posts => {:author => 1, :id => 1}) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:posts => {:author => nil, :id => 1}) }
+          end
         end
 
         context 'for a resource collection' do
@@ -107,6 +113,12 @@ RSpec.describe Ivy::Serializers::Formats::JSON do
           let(:resource) { post }
 
           it { should eq(:posts => {:id => 1, :user => 1}) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:posts => {:id => 1, :user => nil}) }
+          end
         end
 
         context 'for a resource collection' do
@@ -130,6 +142,12 @@ RSpec.describe Ivy::Serializers::Formats::JSON do
             :authors => [{:id => 1}],
             :posts => {:author => 1, :id => 1}
           ) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:posts => {:author => nil, :id => 1}) }
+          end
         end
 
         context 'for a resource collection' do
@@ -153,6 +171,12 @@ RSpec.describe Ivy::Serializers::Formats::JSON do
           let(:resource) { post }
 
           it { should eq(:posts => {:author => 1, :id => 1}) }
+
+          context 'with no related resource' do
+            let(:author) { nil }
+
+            it { should eq(:posts => {:author => nil, :id => 1}) }
+          end
         end
 
         context 'for a resource collection' do

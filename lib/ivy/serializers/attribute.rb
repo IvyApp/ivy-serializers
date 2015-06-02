@@ -17,7 +17,7 @@ module Ivy
       end
 
       def get(resource)
-        @getter.call(resource)
+        @getter.call(resource) if resource
       end
     end
   end

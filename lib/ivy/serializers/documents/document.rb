@@ -12,7 +12,7 @@ module Ivy
         end
 
         def belongs_to(name, resource, options={})
-          include_resource(resource) if options[:embed_in_root]
+          include_resource(resource) if resource && options[:embed_in_root]
         end
 
         def generate(generator)
