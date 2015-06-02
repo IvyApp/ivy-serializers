@@ -29,10 +29,6 @@ module Ivy
           super(singularize(primary_resource_name).to_sym, primary_resource)
         end
 
-        def primary_resources(primary_resources_name, primary_resources)
-          super(primary_resources_name, primary_resources)
-        end
-
         private
 
         def polymorphic_resource(resource)
