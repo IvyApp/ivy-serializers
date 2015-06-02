@@ -6,7 +6,7 @@ module Ivy
     class Mapping
       def initialize(klass)
         @attrs = {}
-        @links = {}
+        @relationships = {}
         @klass = klass
       end
 
@@ -19,7 +19,7 @@ module Ivy
       end
 
       def belongs_to(name, options={}, &block)
-        @links[name] = Relationships::BelongsTo.new(name, options, &block)
+        @relationships[name] = Relationships::BelongsTo.new(name, options, &block)
       end
 
       def generate_attributes(generator, resource)
@@ -27,16 +27,16 @@ module Ivy
       end
 
       def has_many(name, options={}, &block)
-        @links[name] = Relationships::HasMany.new(name, options, &block)
+        @relationships[name] = Relationships::HasMany.new(name, options, &block)
       end
 
-      def links(generator, resource)
-        @links.each_value { |link| link.generate(generator, resource) }
+      def relationships(generator, resource)
+        @relationships.each_value { |relationship| relationship.generate(generator, resource) }
       end
 
       def resource(generator, resource)
         generator.attributes(resource) unless @attrs.empty?
-        generator.links(resource) unless @links.empty?
+        generator.relationships(resource) unless @relationships.empty?
       end
     end
   end

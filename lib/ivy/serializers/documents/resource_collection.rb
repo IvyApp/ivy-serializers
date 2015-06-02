@@ -5,7 +5,7 @@ module Ivy
     module Documents
       class ResourceCollection < Document
         def generate_linked(generator)
-          @primary_resource.each { |resource| @serializer.links(self, resource) }
+          @primary_resource.each { |resource| @serializer.relationships(self, resource) }
           super
         end
 

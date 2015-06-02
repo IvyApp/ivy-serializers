@@ -5,7 +5,7 @@ module Ivy
     module Documents
       class IndividualResource < Document
         def generate_linked(generator)
-          @serializer.links(self, @primary_resource)
+          @serializer.relationships(self, @primary_resource)
           super
         end
 

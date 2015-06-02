@@ -25,16 +25,16 @@ module Ivy
           @hash_gen.store_object(:included) { super }
         end
 
-        def links(document)
-          @hash_gen.store_object(:relationships) { super }
-        end
-
         def primary_resource(primary_resource_name, primary_resource)
           super(:data, primary_resource)
         end
 
         def primary_resources(primary_resources_name, primary_resources)
           super(:data, primary_resources)
+        end
+
+        def relationships(document)
+          @hash_gen.store_object(:relationships) { super }
         end
 
         def resource(resource)

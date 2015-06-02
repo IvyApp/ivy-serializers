@@ -14,8 +14,8 @@ module Ivy
           base._registry = Registry.new
         end
 
-        def links(generator, resource)
-          _registry.links(generator, resource)
+        def relationships(generator, resource)
+          _registry.relationships(generator, resource)
         end
 
         def map(klass, &block)
@@ -31,8 +31,8 @@ module Ivy
         self.class.attributes(generator, resource)
       end
 
-      def links(generator, links)
-        self.class.links(generator, links)
+      def relationships(generator, resource)
+        self.class.relationships(generator, resource)
       end
 
       def resource(generator, resource)

@@ -53,16 +53,16 @@ module Ivy
           @hash_gen.store_array(key) { resources(resources) }
         end
 
-        def links(resource)
-          @document.generate_links(self, resource)
-        end
-
         def primary_resource(primary_resource_name, primary_resource)
           @hash_gen.store_object(primary_resource_name) { resource(primary_resource) }
         end
 
         def primary_resources(primary_resources_name, primary_resources)
           @hash_gen.store_array(primary_resources_name) { resources(primary_resources) }
+        end
+
+        def relationships(resource)
+          @document.generate_relationships(self, resource)
         end
 
         def resource(resource)

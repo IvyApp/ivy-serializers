@@ -11,12 +11,12 @@ module Ivy
         mapping_for(resource.class).generate_attributes(generator, resource)
       end
 
-      def links(generator, resource)
-        mapping_for(resource.class).links(generator, resource)
-      end
-
       def map(klass, &block)
         mapping_for(klass).instance_eval(&block)
+      end
+
+      def relationships(generator, resource)
+        mapping_for(resource.class).relationships(generator, resource)
       end
 
       def resource(generator, resource)

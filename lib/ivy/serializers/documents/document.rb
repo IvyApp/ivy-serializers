@@ -31,8 +31,8 @@ module Ivy
           @linked_resources.each_pair { |klass, resources| generator.linked_resources(klass, resources) }
         end
 
-        def generate_links(generator, resource)
-          @serializer.links(generator, resource)
+        def generate_relationships(generator, resource)
+          @serializer.relationships(generator, resource)
         end
 
         def generate_resource(generator, resource)
@@ -46,7 +46,7 @@ module Ivy
         private
 
         def link(resource)
-          @serializer.links(self, resource) if @linked_resources[resource.class].add?(resource)
+          @serializer.relationships(self, resource) if @linked_resources[resource.class].add?(resource)
         end
 
         def link_many(resources)
