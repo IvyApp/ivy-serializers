@@ -5,13 +5,13 @@ module Ivy
   module Serializers
     class Mapping
       def initialize(klass)
-        @attrs = {}
+        @attributes = {}
         @relationships = {}
         @klass = klass
       end
 
       def attribute(name, &block)
-        @attrs[name] = Attribute.new(name, &block)
+        @attributes[name] = Attribute.new(name, &block)
       end
 
       def attributes(*names)
@@ -23,7 +23,7 @@ module Ivy
       end
 
       def generate_attributes(generator, resource)
-        @attrs.each_value { |attr| attr.generate(generator, resource) }
+        @attributes.each_value { |attribute| attribute.generate(generator, resource) }
       end
 
       def has_many(name, options={}, &block)
@@ -35,7 +35,7 @@ module Ivy
       end
 
       def resource(generator, resource)
-        generator.attributes(resource) unless @attrs.empty?
+        generator.attributes(resource) unless @attributes.empty?
         generator.relationships(resource) unless @relationships.empty?
       end
     end
