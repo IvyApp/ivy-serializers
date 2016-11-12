@@ -2,6 +2,12 @@
 
 See [changes since release][HEAD]
 
+## [0.4.0][] / 2016-11-12
+
+* Drop Ruby 1.9 support.
+* Remove `activesupport` dependency in favor of `inflecto`.
+* Change `included` into an array, per the JSON-API spec.
+
 ## [0.3.0][] / 2015-06-05
 
 * Gracefully handle `nil` in belongs-to relationships.
@@ -23,5 +29,6 @@ See [changes since release][HEAD]
 [0.1.0]: https://github.com/IvyApp/ivy-serializers/tree/v0.1.0
 [0.2.0]: https://github.com/IvyApp/ivy-serializers/compare/v0.1.0...v0.2.0
 [0.3.0]: https://github.com/IvyApp/ivy-serializers/compare/v0.2.0...v0.3.0
-[HEAD]: https://github.com/IvyApp/ivy-serializers/compare/v0.3.0...master
+[0.4.0]: https://github.com/IvyApp/ivy-serializers/compare/v0.3.0...v0.4.0
+[HEAD]: https://github.com/IvyApp/ivy-serializers/compare/v0.4.0...master
 [ivy-serializers-rails]: https://github.com/IvyApp/ivy-serializers-rails
