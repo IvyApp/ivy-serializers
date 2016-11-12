@@ -1,5 +1,5 @@
-require 'active_support/inflector'
 require 'hash_generator'
+require 'inflecto'
 
 module Ivy
   module Serializers
@@ -87,15 +87,15 @@ module Ivy
         end
 
         def extract_type(resource)
-          ActiveSupport::Inflector.dasherize(key_for_individual(resource.class))
+          Inflecto.dasherize(key_for_individual(resource.class))
         end
 
         def key_for_collection(resource_class)
-          ActiveSupport::Inflector.pluralize(key_for_individual(resource_class))
+          Inflecto.pluralize(key_for_individual(resource_class))
         end
 
         def key_for_individual(resource_class)
-          ActiveSupport::Inflector.underscore(resource_class.name)
+          Inflecto.underscore(resource_class.name)
         end
       end
     end

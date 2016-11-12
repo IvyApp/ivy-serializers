@@ -1,4 +1,4 @@
-require 'active_support/inflector'
+require 'inflecto'
 require 'ivy/serializers/formats/json'
 
 module Ivy
@@ -41,7 +41,7 @@ module Ivy
         end
 
         def singularize(name)
-          ActiveSupport::Inflector.singularize(name.to_s)
+          Inflecto.singularize(name.to_s)
         end
       end
     end
