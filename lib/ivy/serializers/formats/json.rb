@@ -48,9 +48,11 @@ module Ivy
           document.generate_included_resources(self)
         end
 
-        def included_resources(resource_class, resources)
-          key = key_for_collection(resource_class).to_sym
-          @hash_gen.store_array(key) { resources(resources) }
+        def included_resources(included_resources)
+          included_resources.each_pair do |resource_class, resources|
+            key = key_for_collection(resource_class).to_sym
+            @hash_gen.store_array(key) { resources(resources) }
+          end
         end
 
         def primary_resource(primary_resource_name, primary_resource)

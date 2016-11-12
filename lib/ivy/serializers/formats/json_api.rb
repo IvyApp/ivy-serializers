@@ -21,7 +21,11 @@ module Ivy
         end
 
         def included(document)
-          @hash_gen.store_object(:included) { super }
+          @hash_gen.store_array(:included) { super }
+        end
+
+        def included_resources(included_resources)
+          included_resources.each_value { |resources| resources(resources) }
         end
 
         def primary_resource(primary_resource_name, primary_resource)

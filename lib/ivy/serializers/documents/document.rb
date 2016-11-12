@@ -28,7 +28,7 @@ module Ivy
         end
 
         def generate_included_resources(generator)
-          @included_resources.each_pair { |klass, resources| generator.included_resources(klass, resources) }
+          generator.included_resources(@included_resources)
         end
 
         def generate_relationships(generator, resource)

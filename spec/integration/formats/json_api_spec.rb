@@ -248,12 +248,10 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }
             },
 
-            :included => {
-              :authors => [{
-                :id => '1',
-                :type => 'author'
-              }]
-            }
+            :included => [{
+              :id => '1',
+              :type => 'author'
+            }]
           }) }
 
           context 'with no related resource' do
@@ -285,12 +283,10 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }
             }],
 
-            :included => {
-              :authors => [{
-                :id => '1',
-                :type => 'author'
-              }]
-            }
+            :included => [{
+              :id => '1',
+              :type => 'author'
+            }]
           }) }
         end
       end
@@ -457,12 +453,10 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }
             },
 
-            :included => {
-              :comments => [{
-                :type => 'comment',
-                :id => '1'
-              }]
-            }
+            :included => [{
+              :type => 'comment',
+              :id => '1'
+            }]
           }) }
         end
 
@@ -480,12 +474,10 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
               }
             }],
 
-            :included => {
-              :comments => [{
-                :type => 'comment',
-                :id => '1'
-              }]
-            }
+            :included => [{
+              :type => 'comment',
+              :id => '1'
+            }]
           }) }
         end
       end
