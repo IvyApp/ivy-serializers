@@ -16,6 +16,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
       context 'for an individual resource' do
         let(:resource) { post }
 
+        it { should match_json_schema(:json_api) }
+
         it { should eq({
           :data => {
             :type => 'post',
@@ -26,6 +28,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
       context 'for a resource collection' do
         let(:resource) { [post] }
+
+        it { should match_json_schema(:json_api) }
 
         it { should eq({
           :data => [{
@@ -50,6 +54,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -63,6 +69,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -86,6 +94,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -99,6 +109,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -129,6 +141,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -144,6 +158,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           context 'with no related resource' do
             let(:author) { nil }
 
+            it { should match_json_schema(:json_api) }
+
             it { should eq({
               :data => {
                 :type => 'post',
@@ -158,6 +174,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -183,6 +201,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -198,6 +218,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           context 'with no related resource' do
             let(:author) { nil }
 
+            it { should match_json_schema(:json_api) }
+
             it { should eq({
               :data => {
                 :type => 'post',
@@ -212,6 +234,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -237,6 +261,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -257,6 +283,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           context 'with no related resource' do
             let(:author) { nil }
 
+            it { should match_json_schema(:json_api) }
+
             it { should eq({
               :data => {
                 :type => 'post',
@@ -271,6 +299,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -301,6 +331,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -316,6 +348,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
           context 'with no related resource' do
             let(:author) { nil }
 
+            it { should match_json_schema(:json_api) }
+
             it { should eq({
               :data => {
                 :type => 'post',
@@ -330,6 +364,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -362,6 +398,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -377,6 +415,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -402,6 +442,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -417,6 +459,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -442,6 +486,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -462,6 +508,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
@@ -492,6 +540,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
         context 'for an individual resource' do
           let(:resource) { post }
 
+          it { should match_json_schema(:json_api) }
+
           it { should eq({
             :data => {
               :type => 'post',
@@ -507,6 +557,8 @@ RSpec.describe Ivy::Serializers::Formats::JSONAPI do
 
         context 'for a resource collection' do
           let(:resource) { [post] }
+
+          it { should match_json_schema(:json_api) }
 
           it { should eq({
             :data => [{
